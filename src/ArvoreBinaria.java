@@ -141,10 +141,10 @@ public class ArvoreBinaria {
     }
 
     public No procurarNoPai(No atual, No desejado){
-        if (atual == null ){
+        if (atual == null || atual == desejado) {
             return null;
         }
-        if (atual.getEsquerda() == desejado || atual.getDireita() == null){
+        if (atual.getEsquerda() == desejado || atual.getDireita() == desejado){
             return atual;
         }
         if (desejado.getConteudo() < atual.getConteudo()){
@@ -156,8 +156,8 @@ public class ArvoreBinaria {
 
 
     public No procurarNo(No atual, No desejado){
-        if (atual == null){
-            return desejado = null;
+        if (atual == null || atual.getConteudo() == null){
+            return null;
         }
         if (desejado.getConteudo().equals(atual.getConteudo())){
             return atual;
@@ -169,6 +169,11 @@ public class ArvoreBinaria {
     }
 
     public void removerFolha(No desejado, No pai){
+        if (pai == null) {
+            this.raiz = new No(null);
+            return;
+        }
+
       if (pai.getEsquerda() == desejado){
           pai.setEsquerda(null);
       } else{
@@ -177,16 +182,46 @@ public class ArvoreBinaria {
     }
 
     public void removerFilho(No encontrado, No pai){
+        No filhoUnico;
+
         if (encontrado.getEsquerda() != null) {
-            pai.setEsquerda(encontrado.getEsquerda());
+           filhoUnico = encontrado.getEsquerda();
         } else{
-            pai.setDireita(encontrado.getDireita());
+            filhoUnico = encontrado.getDireita();
         }
+
+        if (pai == null) {
+            // Caso seja a remoção da raiz da árvore
+            this.raiz = filhoUnico;
+            return;
+        }
+        if (pai.getEsquerda() == encontrado) {
+            pai.setEsquerda(filhoUnico);
+        } else {
+            pai.setDireita(filhoUnico);
+        }
+
     };
 
     public void removerDoisFilhos(No encontrado, No pai){
-        if ()
+        No raizDireita = encontrado.getDireita();
+        No substituto = obterMenor(raizDireita);
+
+        int conteudoSubstituto = substituto.getConteudo();
+
+        remover(conteudoSubstituto);
+
+        encontrado.setConteudo(conteudoSubstituto);
     };
+
+    private No obterMenor(No atual){
+        if (atual.getEsquerda() == null) {
+            return atual;
+        } else {
+            return obterMenor(atual.getDireita());
+        }
+    }
+
     }
 
 
