@@ -118,5 +118,75 @@ public class ArvoreBinaria {
         }
     }
 
+    public void remover(Integer conteudo) {
+        No noDesejado = new No(conteudo);
+        No noEncontrado = procurarNo(this.raiz, noDesejado);
 
-}
+        if (noEncontrado == null ){
+            System.out.println("Esse nó não existe");
+            return;
+        }
+
+        No noPai = procurarNoPai(this.raiz, noEncontrado);
+
+        if (noEncontrado.getEsquerda() != null && noEncontrado.getDireita() != null){
+            removerDoisFilhos(noEncontrado, noPai);
+        }
+        else if(noEncontrado.getEsquerda() == null && noEncontrado.getDireita() == null ){
+            removerFolha(noEncontrado, noPai);
+        }
+        else if (noEncontrado.getEsquerda() != null || noEncontrado.getDireita() != null) {
+            removerFilho(noEncontrado, noPai);
+        }
+    }
+
+    public No procurarNoPai(No atual, No desejado){
+        if (atual == null ){
+            return null;
+        }
+        if (atual.getEsquerda() == desejado || atual.getDireita() == null){
+            return atual;
+        }
+        if (desejado.getConteudo() < atual.getConteudo()){
+            return procurarNoPai(atual.getEsquerda(), desejado);
+        } else {
+            return procurarNoPai(atual.getDireita(), desejado);
+        }
+    };
+
+
+    public No procurarNo(No atual, No desejado){
+        if (atual == null){
+            return desejado = null;
+        }
+        if (desejado.getConteudo().equals(atual.getConteudo())){
+            return atual;
+        } else if (desejado.getConteudo() > atual.getConteudo()) {
+            return procurarNo(atual.getDireita(), desejado);
+        }else {
+            return procurarNo(atual.getEsquerda(), desejado);
+        }
+    }
+
+    public void removerFolha(No desejado, No pai){
+      if (pai.getEsquerda() == desejado){
+          pai.setEsquerda(null);
+      } else{
+          pai.setDireita(null);
+      }
+    }
+
+    public void removerFilho(No encontrado, No pai){
+        if (encontrado.getEsquerda() != null) {
+            pai.setEsquerda(encontrado.getEsquerda());
+        } else{
+            pai.setDireita(encontrado.getDireita());
+        }
+    };
+
+    public void removerDoisFilhos(No encontrado, No pai){
+        if ()
+    };
+    }
+
+
