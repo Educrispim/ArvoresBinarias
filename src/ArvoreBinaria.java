@@ -130,7 +130,7 @@ public class ArvoreBinaria {
         No noPai = procurarNoPai(this.raiz, noEncontrado);
 
         if (noEncontrado.getEsquerda() != null && noEncontrado.getDireita() != null){
-            removerDoisFilhos(noEncontrado, noPai);
+            removerDoisFilhos(noEncontrado);
         }
         else if(noEncontrado.getEsquerda() == null && noEncontrado.getDireita() == null ){
             removerFolha(noEncontrado, noPai);
@@ -203,7 +203,7 @@ public class ArvoreBinaria {
 
     };
 
-    public void removerDoisFilhos(No encontrado, No pai){
+    public void removerDoisFilhos(No encontrado){
         No raizDireita = encontrado.getDireita();
         No substituto = obterMenor(raizDireita);
 
